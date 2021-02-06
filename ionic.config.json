@@ -1,0 +1,7 @@
+{
+  "name": "team-manager",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
