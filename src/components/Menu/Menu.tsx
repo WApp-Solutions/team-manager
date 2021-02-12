@@ -26,8 +26,7 @@ import {
   warningOutline,
   warningSharp,
 } from 'ionicons/icons';
-import './Menu.css';
-import React from 'react';
+import MenuStyles from './Menu.module.scss';
 
 interface AppPage {
   url: string;
@@ -90,7 +89,7 @@ const Menu: React.FC = () => {
             // eslint-disable-next-line react/no-array-index-key
             <IonMenuToggle key={index} autoHide={false}>
               <IonItem
-                className={location.pathname === appPage.url ? 'selected' : ''}
+                className={location.pathname === appPage.url ? MenuStyles.selected : ''}
                 routerLink={appPage.url}
                 routerDirection="none"
                 lines="none"

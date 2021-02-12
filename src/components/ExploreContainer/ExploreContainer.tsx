@@ -1,5 +1,4 @@
-import './ExploreContainer.css';
-import React from 'react';
+import ExploreContainerStyles from './ExploreContainer.module.scss';
 
 interface ContainerProps {
   name: string;
@@ -7,7 +6,7 @@ interface ContainerProps {
 
 function ExploreContainer({ name }: ContainerProps): React.ReactElement {
   return (
-    <div className="container">
+    <div className={ExploreContainerStyles.container}>
       <strong>{name}</strong>
       <p>
         Explore
