@@ -5,10 +5,11 @@
 import '@testing-library/jest-dom/extend-expect';
 
 // Mock matchmedia
+// eslint-disable-next-line func-names
 window.matchMedia = window.matchMedia || function() {
   return {
       matches: false,
-      addListener: function() {},
-      removeListener: function() {}
+      addListener() {},
+      removeListener() {}
   };
 };
