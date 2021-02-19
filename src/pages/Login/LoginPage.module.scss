@@ -1,0 +1,60 @@
+.page {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  --background: var(--ion-background-color, #fff);
+
+  .content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 80%;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    --background: white;
+    border-radius: 25px;
+
+    &::part(background) {
+      border-radius: 25px;
+    }
+
+    .logo {
+      width: 40%;
+      // justify-content: center;
+    }
+
+    .loginTitle {
+      color: var(--ion-color-primary);
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .input {
+      margin-bottom: 1rem;
+      border-radius: 5px;
+      border: 1px solid gray;
+      background: white;
+    }
+
+    .buttons {
+      position: relative;
+      padding: 10;
+      padding-top: 20;
+      width: 100%;
+      text-align: center;
+
+      .loginButton {
+        margin: 10px auto;
+        width: 50%;
+      }
+
+      .forgotPassword {
+        width: 100%;
+      }
+    }
+  }
+}
