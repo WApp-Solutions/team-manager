@@ -3,6 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import Page from './pages/Page/Page';
+import LoginPage from './pages/Login/LoginPage';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -24,21 +25,29 @@ import '@ionic/react/css/display.css';
 import './theme/variables.scss';
 import { Menu } from './components';
 
+// User is authenticated and has access to protected views
+const isAuthenticated = false;
 const App: React.FC = () => (
   <IonApp>
-    <IonReactRouter>
-      <IonSplitPane contentId="main">
-        <Menu />
-        <IonRouterOutlet id="main">
-          <Route path="/" exact>
-            <Redirect to="/page/Inbox" />
-          </Route>
-          <Route path="/page/:name" exact>
-            <Page />
-          </Route>
-        </IonRouterOutlet>
-      </IonSplitPane>
-    </IonReactRouter>
+    {isAuthenticated ? (
+      <>
+        <IonReactRouter>
+          <IonSplitPane contentId="main">
+            <Menu />
+            <IonRouterOutlet id="main">
+              <Route path="/" exact>
+                <Redirect to="/page/Inbox" />
+              </Route>
+              <Route path="/page/:name" exact>
+                <Page />
+              </Route>
+            </IonRouterOutlet>
+          </IonSplitPane>
+        </IonReactRouter>
+      </>
+    ) : (
+      <LoginPage />
+    )}
   </IonApp>
 );
 
