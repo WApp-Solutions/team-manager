@@ -1,13 +1,23 @@
 import { StrictMode } from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider as StoreProvider } from 'react-redux';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 
-ReactDOM.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+import { epicMiddleware } from './core/store/middleware/epic';
+import { rootEpic$ } from './core/store/root.epic';
+import { AppStore } from './core/store/app-store';
+
+// initialize epic middleware
+epicMiddleware.run(rootEpic$);
+
+render(
+  <StoreProvider store={AppStore}>
+    <StrictMode>
+      <App />
+    </StrictMode>
+  </StoreProvider>,
   document.getElementById('root'),
 );
 
