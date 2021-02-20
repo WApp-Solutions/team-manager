@@ -1,11 +1,16 @@
+import { InputChangeEventDetail } from '@ionic/core';
 import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonText, IonToast } from '@ionic/react';
-import { useHistory } from 'react-router';
 import { useCallback, useState } from 'react';
 
 import LoginPageStyles from './LoginPage.module.scss';
 
+enum ChangeType {
+  TENANT = 'tenant',
+  EMAIL = 'email',
+  PASSWORD = 'password',
+}
+
 const LoginPage: React.FC = () => {
-  const history = useHistory();
   const initializationError = {
     // load this information from store in case the login is not working due to firebase(config) issues
     message: 'Fehler beim Verbindungsaufbau zur Datenbank',
@@ -24,40 +29,25 @@ const LoginPage: React.FC = () => {
     setErrorInfo({ showErrorToast: true, errMsg: 'Benutzername und Passwort stimmen nicht überein' });
   }, [tenant, email, password]);
 
-  const handleTenantChange = useCallback(
-    // e: CustomEvent<InputChangeEventDetail>
-    (e) => {
-      // eslint-disable-next-line
-      if (e && e.detail && e.detail.value) {
-        // eslint-disable-next-line
-        setTenant(e.detail.value);
+  const handleChange = useCallback(
+    (type: ChangeType): ((event: CustomEvent<InputChangeEventDetail>) => void) => (e) => {
+      if (e.detail.value) {
+        switch (type) {
+          case ChangeType.TENANT:
+            setTenant(e.detail.value);
+            break;
+          case ChangeType.EMAIL:
+            setEmail(e.detail.value);
+            break;
+          case ChangeType.PASSWORD:
+            setPassword(e.detail.value);
+            break;
+          default:
+          // do nothing
+        }
       }
     },
-    [setTenant],
-  );
-
-  const handleEmailChange = useCallback(
-    // e: CustomEvent<InputChangeEventDetail>
-    (e) => {
-      // eslint-disable-next-line
-      if (e && e.detail && e.detail.value) {
-        // eslint-disable-next-line
-        setEmail(e.detail.value);
-      }
-    },
-    [setEmail],
-  );
-
-  const handlePasswordChange = useCallback(
-    // e: CustomEvent<InputChangeEventDetail>
-    (e) => {
-      // eslint-disable-next-line
-      if (e && e.detail && e.detail.value) {
-        // eslint-disable-next-line
-        setPassword(e.detail.value);
-      }
-    },
-    [setPassword],
+    [setTenant, setEmail, setPassword],
   );
 
   const handleLogin = useCallback(
@@ -78,27 +68,37 @@ const LoginPage: React.FC = () => {
   return (
     <IonPage className={LoginPageStyles.page}>
       <IonContent className={LoginPageStyles.content}>
-        <IonText color="danger" style={{ fontWeight: '500' }}>
-          {initializationError && initializationError.message}
-        </IonText>
-
-        <img src="/assets/icon/icon.png" alt="Team-Manager Logo" className={LoginPageStyles.logo} />
-
+        <div className={LoginPageStyles.headerContainer}>
+          <IonText color="danger" style={{ fontWeight: '500' }}>
+            {initializationError && initializationError.message}
+          </IonText>
+          <img src="/assets/icon/icon.png" alt="Team-Manager Logo" className={LoginPageStyles.logo} />
+        </div>
         <p className={LoginPageStyles.loginTitle}>Anmeldung</p>
 
         <IonItem className={LoginPageStyles.input}>
           <IonLabel position="stacked">Organisations-Id deines Teams</IonLabel>
-          <IonInput type="text" placeholder="Organisation" onIonChange={handleTenantChange} name="email" />
+          <IonInput type="text" placeholder="Organisation" onIonChange={handleChange(ChangeType.TENANT)} name="email" />
         </IonItem>
 
         <IonItem className={LoginPageStyles.input}>
-          <IonLabel position="stacked">E-Mail Addresse</IonLabel>
-          <IonInput type="email" placeholder="deine@mailadresse.de" onIonChange={handleEmailChange} name="email" />
+          <IonLabel position="stacked">E-Mail Adresse</IonLabel>
+          <IonInput
+            type="email"
+            placeholder="deine@mailadresse.de"
+            onIonChange={handleChange(ChangeType.EMAIL)}
+            name="email"
+          />
         </IonItem>
 
         <IonItem className={LoginPageStyles.input}>
           <IonLabel position="stacked">Passwort</IonLabel>
-          <IonInput type="password" placeholder="Passwort" onIonChange={handlePasswordChange} name="password" />
+          <IonInput
+            type="password"
+            placeholder="Passwort"
+            onIonChange={handleChange(ChangeType.PASSWORD)}
+            name="password"
+          />
         </IonItem>
 
         <div className={LoginPageStyles.buttons}>
