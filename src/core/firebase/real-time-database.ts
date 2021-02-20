@@ -65,6 +65,7 @@ export class RealTimeDatabase {
   }
 
   public addDemo = (demoTitle: string): void => {
+    console.log('Add Demo');
     this.databasePathMap
       .get(DBEntity.DEMO)
       ?.ref?.push({ name: demoTitle })

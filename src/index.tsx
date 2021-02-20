@@ -8,9 +8,12 @@ import reportWebVitals from './reportWebVitals';
 import { epicMiddleware } from './core/store/middleware/epic';
 import { rootEpic$ } from './core/store/root.epic';
 import { AppStore } from './core/store/app-store';
+import { RealTimeDatabase } from './core/firebase/real-time-database';
 
 // initialize epic middleware
 epicMiddleware.run(rootEpic$);
+
+RealTimeDatabase.getInstance();
 
 render(
   <StoreProvider store={AppStore}>

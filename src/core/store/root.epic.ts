@@ -1,4 +1,4 @@
 import { combineEpics } from 'redux-observable';
-import { demoDelayEpic$ } from './demo/demo.epics';
+import { demoAddEpic$, demoDelayEpic$ } from './demo/demo.epics';
 
-export const rootEpic$ = combineEpics(demoDelayEpic$);
+export const rootEpic$ = combineEpics(demoDelayEpic$, demoAddEpic$);
