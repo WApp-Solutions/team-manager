@@ -1219,7 +1219,7 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@ionic/core@5.5.4":
+"@ionic/core@5.5.4", "@ionic/core@^5.5.4":
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.5.4.tgz#7fc586e074e85d446cc595a67e625f77d00d708c"
   integrity sha512-IjbGN8vh3XuJ2ulo3BMlMflcWlUhvEGEexr29JKFvb+O4bWKP5sC2fkqSrswrIstOmv7axm7CeIi2MNRkwYwVA==
