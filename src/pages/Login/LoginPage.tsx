@@ -24,6 +24,42 @@ const LoginPage: React.FC = () => {
     setErrorInfo({ showErrorToast: true, errMsg: 'Benutzername und Passwort stimmen nicht überein' });
   }, [tenant, email, password]);
 
+  const handleTenantChange = useCallback(
+    // e: CustomEvent<InputChangeEventDetail>
+    (e) => {
+      // eslint-disable-next-line
+      if (e && e.detail && e.detail.value) {
+        // eslint-disable-next-line
+        setTenant(e.detail.value);
+      }
+    },
+    [setTenant],
+  );
+
+  const handleEmailChange = useCallback(
+    // e: CustomEvent<InputChangeEventDetail>
+    (e) => {
+      // eslint-disable-next-line
+      if (e && e.detail && e.detail.value) {
+        // eslint-disable-next-line
+        setEmail(e.detail.value);
+      }
+    },
+    [setEmail],
+  );
+
+  const handlePasswordChange = useCallback(
+    // e: CustomEvent<InputChangeEventDetail>
+    (e) => {
+      // eslint-disable-next-line
+      if (e && e.detail && e.detail.value) {
+        // eslint-disable-next-line
+        setPassword(e.detail.value);
+      }
+    },
+    [setPassword],
+  );
+
   const handleLogin = useCallback(
     (e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>) => {
       if (!e.currentTarget) {
@@ -34,6 +70,10 @@ const LoginPage: React.FC = () => {
     },
     [login],
   );
+
+  const handleToastDismiss = useCallback(() => {
+    setErrorInfo({ showErrorToast: false, errMsg: '' });
+  }, [setErrorInfo]);
 
   return (
     <IonPage className={LoginPageStyles.page}>
@@ -48,44 +88,17 @@ const LoginPage: React.FC = () => {
 
         <IonItem className={LoginPageStyles.input}>
           <IonLabel position="stacked">Organisations-Id deines Teams</IonLabel>
-          <IonInput
-            type="email"
-            placeholder="Organisation"
-            onIonChange={(e) => {
-              if (e && e.detail && e.detail.value) {
-                setTenant(e.detail.value);
-              }
-            }}
-            name="email"
-          />
+          <IonInput type="text" placeholder="Organisation" onIonChange={handleTenantChange} name="email" />
         </IonItem>
 
         <IonItem className={LoginPageStyles.input}>
           <IonLabel position="stacked">E-Mail Addresse</IonLabel>
-          <IonInput
-            type="email"
-            placeholder="deine@mailadresse.de"
-            onIonChange={(e) => {
-              if (e && e.detail && e.detail.value) {
-                setEmail(e.detail.value);
-              }
-            }}
-            name="email"
-          />
+          <IonInput type="email" placeholder="deine@mailadresse.de" onIonChange={handleEmailChange} name="email" />
         </IonItem>
 
         <IonItem className={LoginPageStyles.input}>
           <IonLabel position="stacked">Passwort</IonLabel>
-          <IonInput
-            type="password"
-            placeholder="Passwort"
-            onIonChange={(e) => {
-              if (e && e.detail && e.detail.value) {
-                setPassword(e.detail.value);
-              }
-            }}
-            name="password"
-          />
+          <IonInput type="password" placeholder="Passwort" onIonChange={handlePasswordChange} name="password" />
         </IonItem>
 
         <div className={LoginPageStyles.buttons}>
@@ -99,7 +112,7 @@ const LoginPage: React.FC = () => {
         <IonToast
           color="danger"
           isOpen={errorInfo.showErrorToast}
-          onDidDismiss={() => setErrorInfo({ showErrorToast: false, errMsg: '' })}
+          onDidDismiss={handleToastDismiss}
           message={errorInfo.errMsg}
           duration={2000}
         />
