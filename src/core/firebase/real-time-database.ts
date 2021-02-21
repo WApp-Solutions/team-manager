@@ -76,19 +76,19 @@ export class RealTimeDatabase {
     this.databasePathMap.forEach((dataPathWithDBRef, dataName) => {
       const newDataPathWithDBRef = {
         ...dataPathWithDBRef,
-        ref: realTimeDatabase.ref(dataPathWithDBRef.path),
+        ref: realTimeDatabase?.ref(dataPathWithDBRef.path),
       };
 
       newDataPathWithDBRef.events.forEach((e) => {
-        newDataPathWithDBRef.ref.on(e.type, this.handleEvent(e.storeAction));
+        newDataPathWithDBRef.ref?.on(e.type, this.handleEvent(e.storeAction));
       });
 
       newDataPathWithDBRef.childPaths?.forEach((a) => {
         a.events.forEach((e) => {
-          newDataPathWithDBRef.ref.child(a.path).on(e.type, this.handleEvent(e.storeAction));
+          newDataPathWithDBRef.ref?.child(a.path).on(e.type, this.handleEvent(e.storeAction));
         });
       });
-
+      
       this.databasePathMap.set(dataName, newDataPathWithDBRef);
     });
 
