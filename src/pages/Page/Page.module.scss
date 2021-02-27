@@ -1,0 +1,5 @@
+ion-item.ionItem {
+  &::part(native) {
+    --border-style: none;
+  }
+}
