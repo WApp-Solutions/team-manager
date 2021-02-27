@@ -22,7 +22,8 @@
     .headerContainer {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-between;
+      padding: 20px 0;
       align-items: center;
       height: 33%;
     }
