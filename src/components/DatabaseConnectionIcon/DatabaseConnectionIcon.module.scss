@@ -1,0 +1,9 @@
+ion-icon.ionIcon {
+  font-size: 20px;
+  &.success {
+    color: var(--ion-color-success);
+  }
+  &.failure {
+    color: var(--ion-color-danger);
+  }
+}
