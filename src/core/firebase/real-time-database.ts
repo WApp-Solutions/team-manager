@@ -40,12 +40,7 @@ export class RealTimeDatabase {
         childPaths: [
           {
             path: '/deep',
-            events: [
-              {
-                type: 'child_changed',
-                storeAction: demoActions.updateDemo,
-              },
-            ],
+            events: [],
           },
         ],
       },
@@ -88,7 +83,6 @@ export class RealTimeDatabase {
           newDataPathWithDBRef.ref?.child(a.path).on(e.type, this.handleEvent(e.storeAction));
         });
       });
-      
       this.databasePathMap.set(dataName, newDataPathWithDBRef);
     });
 
@@ -103,6 +97,7 @@ export class RealTimeDatabase {
     // Make sure to use TypeGuard for snapshot value to ensure its integrity
     let value = snapshot.val() as T;
     value = { ...value, id: snapshot.key as string };
+    // TODO: add keyStructure
     if (isType<T>(value, DemoKey)) {
       AppStore.dispatch(action(value));
     }
