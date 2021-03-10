@@ -3,6 +3,9 @@ import { IonButton, IonContent, IonInput, IonItem, IonLabel, IonPage, IonText, I
 import { useCallback, useState } from 'react';
 
 import LoginPageStyles from './LoginPage.module.scss';
+import { Authenticator, ProviderType } from '../../core/firebase/authenticator';
+
+// import { Authenticator, ProviderType } from '../../core/firebase/authenticator';
 
 enum ChangeType {
   TENANT = 'tenant',
@@ -20,13 +23,22 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [errorInfo, setErrorInfo] = useState({ showErrorToast: false, errMsg: '' });
 
-  const login = useCallback(() => {
+  const login = useCallback(async () => {
+    await Authenticator.getInstance().signInWith(ProviderType.GITHUB);
+    /* const a = await axios.get('http://localhost:3000/', {
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImM0ZWFhZjkxM2VlNWY0MDY0YmE2NjUzN2M0Njk3YzY5OGE3NGYwODIiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiRmFiaWFuIEhpbHoiLCJwaWN0dXJlIjoiaHR0cHM6Ly9hdmF0YXJzLmdpdGh1YnVzZXJjb250ZW50LmNvbS91LzExMzE1MzIxP3Y9NCIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9hdXRoZW50aWNhdGlvbi10ZXN0LWMwNTUwIiwiYXVkIjoiYXV0aGVudGljYXRpb24tdGVzdC1jMDU1MCIsImF1dGhfdGltZSI6MTYxNDYyNDg0OSwidXNlcl9pZCI6IjBKMUxYWkk4RDBkWHVRZDFYNnhJb2tEVmVIZDIiLCJzdWIiOiIwSjFMWFpJOEQwZFh1UWQxWDZ4SW9rRFZlSGQyIiwiaWF0IjoxNjE0OTQ2MDk5LCJleHAiOjE2MTQ5NDk2OTksImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ2l0aHViLmNvbSI6WyIxMTMxNTMyMSJdfSwic2lnbl9pbl9wcm92aWRlciI6ImdpdGh1Yi5jb20ifX0.zh-whkybXBG50DTPFW6ZCVMkD3ELO-T6CWwWWhUQ-gKWwZAuuNDWqmrxew5LrbCT9aEYrHSTCpwBFzdX1dPhBA7dgZlZRyuj893BvZeAosW5MEKE7jqUnmRpCadlBNGhqcp8ZtXJg1zhJJk-GfYO21ILCiAUK5MZyy9l0OYrXHrUFX0DVzjz202x2QJB-1edD_cN5NdF3VlpZpsPaQdTUD0AzEfbZGJv3RbzeSDW5SM7h76Z9HlnFu6PQr07INzO52qwRE98GJ-R4bRtm12lF96QbJ4ohY1xEftsZQoq7IjBlEyuFaUNsYlm9fCD480yyFc9A29VeLLp2G3h7qzHWg',
+      },
+    }); */
+
+    // console.log(a.data);
     // todo: remove when connecting to authentication service
     console.log(`Tenant: ${tenant}`);
     console.log(`E-Mail: ${email}`);
     console.log(`Passwort: ${password}`);
     // todo: validate email for correct email format
-    setErrorInfo({ showErrorToast: true, errMsg: 'Benutzername und Passwort stimmen nicht überein' });
+    // setErrorInfo({ showErrorToast: true, errMsg: 'Benutzername und Passwort stimmen nicht überein' });
   }, [tenant, email, password]);
 
   const handleChange = useCallback(
@@ -51,12 +63,12 @@ const LoginPage: React.FC = () => {
   );
 
   const handleLogin = useCallback(
-    (e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>) => {
+    async (e: React.MouseEvent<HTMLIonButtonElement, MouseEvent>) => {
       if (!e.currentTarget) {
         return;
       }
       e.preventDefault();
-      login();
+      await login();
     },
     [login],
   );
@@ -116,6 +128,7 @@ const LoginPage: React.FC = () => {
           message={errorInfo.errMsg}
           duration={2000}
         />
+        {Authenticator.getCurrentUser()?.displayName}
       </IonContent>
     </IonPage>
   );
