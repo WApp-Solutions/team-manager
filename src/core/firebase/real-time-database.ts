@@ -27,10 +27,11 @@ const DBEntity = {
 export class RealTimeDatabase {
   private static instance: RealTimeDatabase;
 
-  private databasePathMap: Map<string, DataPathWithDBRef<any>> = new Map<string, DataPathWithDBRef<any>>([
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
+    private databasePathMap: Map<string, DataPathWithDBRef<any>> = new Map<string, DataPathWithDBRef<any>>([
     [
       DBEntity.DEMO,
-      <DataPathWithDBRef<Demo>>{
+      {
         path: '/demo',
         events: [
           { type: 'child_added', storeAction: demoActions.addDemo },
@@ -43,7 +44,7 @@ export class RealTimeDatabase {
             events: [],
           },
         ],
-      },
+      } as DataPathWithDBRef<Demo>,
     ],
     [DBEntity.TEST, { path: '/test', events: [] }],
   ]);
