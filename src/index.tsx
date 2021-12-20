@@ -10,6 +10,7 @@ import { rootEpic$ } from './core/store/root.epic';
 import { AppStore } from './core/store/app-store';
 
 // initialize epic middleware
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 epicMiddleware.run(rootEpic$);
 
 render(

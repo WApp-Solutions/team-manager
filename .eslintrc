@@ -2,14 +2,17 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "parser": "@typescript-eslint/parser",
   "plugins": ["import", "prettier"],
   "extends": [
+    "react-app",
+    "react-app/jest",
     "airbnb-typescript",
     "prettier",
-    "prettier/@typescript-eslint",
-    "airbnb/hooks",
+    "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react-hooks/recommended"
   ],
 
   "rules": {
